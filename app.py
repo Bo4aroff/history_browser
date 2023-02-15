@@ -20,7 +20,7 @@ st.subheader('Добавьте ваш файл')
 
 uploaded_files = st.file_uploader("ВЫБИРИТЕ СВОЙ ФАЙЛ")
 if uploaded_files:
-    con = uploaded_files
+    con = [uploaded_files]
 
     
 #         con = sqlite3.connect(uploaded_files)
