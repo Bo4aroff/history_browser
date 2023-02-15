@@ -25,7 +25,7 @@ with st.form('Указать путь'):
 
     if search:
         st.markdown('---')
-        con = sqlite3.connect(keyword_one)
+        con = sqlite3.connect([keyword_one])
         cur = con.cursor()
         df1 = pd.read_sql_query("""SELECT url, title, visit_count,
         datetime(last_visit_time / 1000000 + (strftime('%s', '1601-01-01')), 'unixepoch', 'localtime')
