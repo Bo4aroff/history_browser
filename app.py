@@ -29,8 +29,7 @@ with st.form('Указать путь'):
         cur = con.cursor()
         df1 = pd.read_sql_query("""SELECT url, title, visit_count,
         datetime(last_visit_time / 1000000 + (strftime('%s', '1601-01-01')), 'unixepoch', 'localtime')
-        FROM urls
-        """, con)
+        FROM urls""", con)
 
 
         df2 = pd.DataFrame(df1)
