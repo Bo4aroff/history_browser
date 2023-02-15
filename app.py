@@ -19,8 +19,8 @@ st.subheader('Добавьте ваш файл')
 
 uploaded_file = st.file_uploader('ВЫБИРИТЕ СВОЙ ФАЙЛ')
 if uploaded_file:
-    con = sqlite3.connect([uploaded_file])
-    cur = con.cursor()
+#     con = sqlite3.connect(uploaded_file)
+#     cur = con.cursor()
 
 # df = cur.execute('''SELECT name from sqlite_master where type= "table"''')
 
@@ -30,7 +30,7 @@ if uploaded_file:
     df1 = pd.read_sql_query("""SELECT url, title, visit_count,
     datetime(last_visit_time / 1000000 + (strftime('%s', '1601-01-01')), 'unixepoch', 'localtime')
     FROM urls
-    """, con)
+    """, uploaded_file)
     # print(df1)
 
     df2 = pd.DataFrame(df1)
