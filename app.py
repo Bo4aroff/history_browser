@@ -25,7 +25,7 @@ with st.form('Указать путь'):
 
     if search:
         st.markdown('---')
-        con = sqlite3.connect([keyword_one])
+        con = sqlite3.connect(keyword_one)
         cur = con.cursor()
         df1 = pd.read_sql_query("""SELECT url, title, visit_count,
         datetime(last_visit_time / 1000000 + (strftime('%s', '1601-01-01')), 'unixepoch', 'localtime')
@@ -41,11 +41,11 @@ with st.form('Указать путь'):
                                   })
         df3['Месяц'] = df3['Дата'].dt.month
         df3['Год'] = df3['Дата'].dt.year
-if st.checkbox('Сформировать файл для скачивания'):
-    df4 = st.dataframe(df3)
-    # df3.to_excel('Ваш файл.xlsx')
+    if st.checkbox('Сформировать файл для скачивания'):
+        df4 = st.dataframe(df3)
+        # df3.to_excel('Ваш файл.xlsx')
 
-if st.checkbox('Сформировать ссылку для скачивания'):
+    if st.checkbox('Сформировать ссылку для скачивания'):
 
-    st.subheader('СКАЧАТЬ ФАЙЛ')
-    generate_excel_download_link(df4)
+        st.subheader('СКАЧАТЬ ФАЙЛ')
+        generate_excel_download_link(df4)
