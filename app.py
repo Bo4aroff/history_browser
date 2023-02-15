@@ -13,13 +13,13 @@ def generate_excel_download_link(df4):
     href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="data_download.xlsx">Download Excel File</a>'
     return st.markdown(href, unsafe_allow_html=True)
 
-st.set_page_config(page_title='Search_words')
+st.set_page_config(page_title='History')
 st.title('Вскрываем историю браузера')
 st.subheader('Добавьте ваш файл')
 
 uploaded_file = st.file_uploader('ВЫБИРИТЕ СВОЙ ФАЙЛ')
 if uploaded_file:
-    con = sqlite3.connect(uploaded_file)
+    con = sqlite3.connect([uploaded_file])
     cur = con.cursor()
 
 # df = cur.execute('''SELECT name from sqlite_master where type= "table"''')
