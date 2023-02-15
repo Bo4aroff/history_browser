@@ -21,7 +21,8 @@ st.subheader('Добавьте ваш файл')
 uploaded_files = st.file_uploader("ВЫБИРИТЕ СВОЙ ФАЙЛ", accept_multiple_files=True)
 for uploaded_file in uploaded_files:
 
-    stringio = StringIO(uploaded_file.getvalue().decode("utf-8"))
+    bytes_data = uploaded_file.read()
+    st.write("filename:", uploaded_file.name)
     
 
     st.markdown('---')
