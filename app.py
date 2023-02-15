@@ -17,26 +17,30 @@ st.set_page_config(page_title='History')
 st.title('Вскрываем историю браузера')
 st.subheader('Добавьте ваш файл')
 
-uploaded_file = st.file_uploader('ВЫБИРИТЕ СВОЙ ФАЙЛ')
+# uploaded_file = st.file_uploader('ВЫБИРИТЕ СВОЙ ФАЙЛ')
 
-if uploaded_file:
-    st.markdown('---')
-    con = sqlite3.connect(uploaded_file)
-    cur = uploaded_file.cursor()
-    df1 = pd.read_sql_query("""SELECT url, title, visit_count,
-    datetime(last_visit_time / 1000000 + (strftime('%s', '1601-01-01')), 'unixepoch', 'localtime')
-    FROM urls
-    """, con)
-    
+with st.form('Указать путь'):
+    keyword_one = st.text_input('Введите путь')
+    search = st.form_submit_button("ВВОД")
 
-    df2 = pd.DataFrame(df1)
-    df3 = df2.rename(columns={"datetime(last_visit_time / 1000000 + (strftime('%s', '1601-01-01')), 'unixepoch', 'localtime')": "Дата",
-                              "url": "Адрес",
-                              "title": "Имя запроса",
-                              "visit_count": "Посещений страницы"
-                              })
-    df3['Месяц'] = df3['Дата'].dt.month
-    df3['Год'] = df3['Дата'].dt.year
+    if search:
+        st.markdown('---')
+        con = sqlite3.connect(keyword_one)
+        cur = con.cursor()
+        df1 = pd.read_sql_query("""SELECT url, title, visit_count,
+        datetime(last_visit_time / 1000000 + (strftime('%s', '1601-01-01')), 'unixepoch', 'localtime')
+        FROM urls
+        """, con)
+
+
+        df2 = pd.DataFrame(df1)
+        df3 = df2.rename(columns={"datetime(last_visit_time / 1000000 + (strftime('%s', '1601-01-01')), 'unixepoch', 'localtime')": "Дата",
+                                  "url": "Адрес",
+                                  "title": "Имя запроса",
+                                  "visit_count": "Посещений страницы"
+                                  })
+        df3['Месяц'] = df3['Дата'].dt.month
+        df3['Год'] = df3['Дата'].dt.year
 if st.checkbox('Сформировать файл для скачивания'):
     df4 = st.dataframe(df3)
     # df3.to_excel('Ваш файл.xlsx')
