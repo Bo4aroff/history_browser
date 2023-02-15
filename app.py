@@ -19,7 +19,7 @@ st.subheader('Добавьте ваш файл')
 
 uploaded_file = st.file_uploader('ВЫБИРИТЕ СВОЙ ФАЙЛ')
 if uploaded_file:
-#     con = sqlite3.connect(uploaded_file)
+    con = sqlite3.connect(uploaded_file)
     cur = uploaded_file.cursor()
 
 # df = cur.execute('''SELECT name from sqlite_master where type= "table"''')
