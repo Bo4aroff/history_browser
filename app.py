@@ -23,7 +23,7 @@ if uploaded_files:
 
     
 #         con = sqlite3.connect(uploaded_files)
-#         cur = con.cursor()
+        cur = uploaded_files.cursor()
         df1 = pd.read_sql_query("""SELECT url, title, visit_count, 
             datetime(last_visit_time / 1000000 + (strftime('%s', '1601-01-01')), 'unixepoch', 'localtime') FROM urls""", con=uploaded_files)
 
