@@ -21,7 +21,7 @@ st.subheader('Добавьте ваш файл')
 
 
 
-uploaded_files = 'C:\Users\bocha\OneDrive\Рабочий стол\Python_tutorial'
+uploaded_files = uploaded_file = st.file_uploader('ВЫБИРИТЕ СВОЙ ФАЙЛ')
 if uploaded_files:
     
 
