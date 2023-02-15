@@ -20,9 +20,9 @@ st.subheader('Добавьте ваш файл')
 # uploaded_file = st.file_uploader('ВЫБИРИТЕ СВОЙ ФАЙЛ')
 uploaded_files = st.file_uploader("ВЫБИРИТЕ СВОЙ ФАЙЛ", accept_multiple_files=True)
 for uploaded_file in uploaded_files:
-    bytes_data = uploaded_file.read()
-    st.write("filename:", uploaded_file.name)
-    st.write(bytes_data)
+
+    stringio = StringIO(uploaded_file.getvalue().decode("utf-8"))
+    
 
     st.markdown('---')
     con = sqlite3.connect(uploaded_file)
