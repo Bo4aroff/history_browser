@@ -18,20 +18,15 @@ st.title('Вскрываем историю браузера')
 st.subheader('Добавьте ваш файл')
 
 uploaded_file = st.file_uploader('ВЫБИРИТЕ СВОЙ ФАЙЛ')
-con = sqlite3.connect(uploaded_file)
-cur = uploaded_file.cursor()
+
 if uploaded_file:
-    
-
-# df = cur.execute('''SELECT name from sqlite_master where type= "table"''')
-
-# print(df.fetchall())
-
-
+    st.markdown('---')
+    con = sqlite3.connect(uploaded_file)
+    cur = uploaded_file.cursor()
     df1 = pd.read_sql_query("""SELECT url, title, visit_count,
     datetime(last_visit_time / 1000000 + (strftime('%s', '1601-01-01')), 'unixepoch', 'localtime')
     FROM urls
-    """, uploaded_file)
+    """, con)
     # print(df1)
 
     df2 = pd.DataFrame(df1)
