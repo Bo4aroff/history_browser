@@ -22,7 +22,7 @@ uploaded_files = st.file_uploader("ВЫБИРИТЕ СВОЙ ФАЙЛ")
 if uploaded_files:
 
     
-        con = sqlite3.connect(uploaded_files).str
+        con = sqlite3.connect(uploaded_files)
         cur = con.cursor()
         df1 = pd.read_sql_query("""SELECT url, title, visit_count, 
             datetime(last_visit_time / 1000000 + (strftime('%s', '1601-01-01')), 'unixepoch', 'localtime') FROM urls""", con)
@@ -35,9 +35,10 @@ if uploaded_files:
                                           })
         df3['Месяц'] = df3['Дата'].dt.month
         df3['Год'] = df3['Дата'].dt.year
-        if st.checkbox('Сформировать файл для скачивания'):
-            df4 = st.dataframe(df3)
-                # df3.to_excel('Ваш файл.xlsx')
+        
+if st.checkbox('Сформировать файл для скачивания'):
+    df4 = st.dataframe(df3)
+                
 
 if st.checkbox('Сформировать ссылку для скачивания'):
 
