@@ -19,7 +19,7 @@ st.title('Вскрываем историю браузера')
 st.subheader('Добавьте ваш файл')
 
 uploaded_files = st.file_uploader("ВЫБИРИТЕ СВОЙ ФАЙЛ")
-# if uploaded_files:
+if uploaded_files:
 
     
 #         con = sqlite3.connect(uploaded_files)
