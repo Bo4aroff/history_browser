@@ -19,43 +19,31 @@ st.title('Вскрываем историю браузера')
 st.subheader('Добавьте ваш файл')
 
 
-def create_connection(db_file):
-    """ create a database connection to the SQLite database
-        specified by the db_file
-    :param db_file: database file
-    :return: Connection object or None
-    """
-    conn = None
-    try:
-        conn = sqlite3.connect(db_file)
-    except Exception as e:
-        st.write(e)
 
-    return conn
 
-# uploaded_files = st.file_uploader("ВЫБИРИТЕ СВОЙ ФАЙЛ")
-# if uploaded_files:
+uploaded_files = st.file_uploader("ВЫБИРИТЕ СВОЙ ФАЙЛ")
+if uploaded_files:
     
 
     
-#     con = sqlite3.connect(uploaded_files)
-#     cur = con.cursor()
-#     df1 = pd.read_sql("""SELECT url, title, visit_count, 
-#             datetime(last_visit_time / 1000000 + (strftime('%s', '1601-01-01')), 'unixepoch', 'localtime') FROM urls""", con)
-#     df2 = pd.DataFrame(df1)
-#     df3 = df2.rename(columns={"datetime(last_visit_time / 1000000 + (strftime('%s', '1601-01-01')), 'unixepoch', 'localtime')": "Дата",
-#                                           "url": "Адрес",
-#                                           "title": "Имя запроса",
-#                                           "visit_count": "Посещений страницы"
-#                                           })
-#     df3['Месяц'] = df3['Дата'].dt.month
-#     df3['Год'] = df3['Дата'].dt.year
+    con = sqlite3.connect(uploaded_files)
+    cur = con.cursor()
+    df1 = pd.read_sql("""SELECT url, title, visit_count, 
+            datetime(last_visit_time / 1000000 + (strftime('%s', '1601-01-01')), 'unixepoch', 'localtime') FROM urls""", con)
+    df2 = pd.DataFrame(df1)
+    df3 = df2.rename(columns={"datetime(last_visit_time / 1000000 + (strftime('%s', '1601-01-01')), 'unixepoch', 'localtime')": "Дата",
+                                          "url": "Адрес",
+                                          "title": "Имя запроса",
+                                          "visit_count": "Посещений страницы"
+                                          })
+    df3['Месяц'] = df3['Дата'].dt.month
+    df3['Год'] = df3['Дата'].dt.year
         
-# if st.checkbox('Сформировать файл для скачивания'):
-#     df4 = st.dataframe(df3)
+if st.checkbox('Сформировать файл для скачивания'):
+    df4 = st.dataframe(df3)
                 
 
-# if st.checkbox('Сформировать ссылку для скачивания'):
+if st.checkbox('Сформировать ссылку для скачивания'):
 
-#     st.subheader('СКАЧАТЬ ФАЙЛ')
-#     generate_excel_download_link(df4)
+    st.subheader('СКАЧАТЬ ФАЙЛ')
+    generate_excel_download_link(df4)
