@@ -39,6 +39,8 @@ if uploaded_file:
                               "title": "Имя запроса",
                               "visit_count": "Посещений страницы"
                               })
+    df3['Месяц'] = df3['Дата'].dt.month
+    df3['Год'] = df3['Дата'].dt.year
 if st.checkbox('Сформировать файл для скачивания'):
     df4 = st.dataframe(df3)
     # df3.to_excel('Ваш файл.xlsx')
