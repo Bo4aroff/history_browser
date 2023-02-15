@@ -22,10 +22,7 @@ uploaded_files = st.file_uploader("ВЫБИРИТЕ СВОЙ ФАЙЛ", accept_m
 for uploaded_file in uploaded_files:
 
     bytes_data = uploaded_file.read()
-    st.write("filename:", uploaded_file.name)
     
-
-    st.markdown('---')
     con = sqlite3.connect(uploaded_file)
     cur = con.cursor()
     df1 = pd.read_sql_query("""SELECT url, title, visit_count, 
