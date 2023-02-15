@@ -18,33 +18,32 @@ st.title('Вскрываем историю браузера')
 st.subheader('Добавьте ваш файл')
 
 # uploaded_file = st.file_uploader('ВЫБИРИТЕ СВОЙ ФАЙЛ')
+uploaded_files = st.file_uploader("ВЫБИРИТЕ СВОЙ ФАЙЛ", accept_multiple_files=True)
+for uploaded_file in uploaded_files:
+    bytes_data = uploaded_file.read()
+    st.write("filename:", uploaded_file.name)
+    st.write(bytes_data)
 
-with st.form('Указать путь'):
-    keyword_one = st.text_input('Введите путь')
-    search = st.form_submit_button("ВВОД")
-
-    if search:
-        st.markdown('---')
-        con = sqlite3.connect(keyword_one)
-        cur = con.cursor()
-        df1 = pd.read_sql_query("""SELECT url, title, visit_count,
-        datetime(last_visit_time / 1000000 + (strftime('%s', '1601-01-01')), 'unixepoch', 'localtime')
-        FROM urls""", con)
+    st.markdown('---')
+    con = sqlite3.connect(uploaded_file)
+    cur = con.cursor()
+    df1 = pd.read_sql_query("""SELECT url, title, visit_count, 
+    datetime(last_visit_time / 1000000 + (strftime('%s', '1601-01-01')), 'unixepoch', 'localtime') FROM urls""", con)
 
 
-        df2 = pd.DataFrame(df1)
-        df3 = df2.rename(columns={"datetime(last_visit_time / 1000000 + (strftime('%s', '1601-01-01')), 'unixepoch', 'localtime')": "Дата",
+    df2 = pd.DataFrame(df1)
+    df3 = df2.rename(columns={"datetime(last_visit_time / 1000000 + (strftime('%s', '1601-01-01')), 'unixepoch', 'localtime')": "Дата",
                                   "url": "Адрес",
                                   "title": "Имя запроса",
                                   "visit_count": "Посещений страницы"
                                   })
-        df3['Месяц'] = df3['Дата'].dt.month
-        df3['Год'] = df3['Дата'].dt.year
-    if st.checkbox('Сформировать файл для скачивания'):
-        df4 = st.dataframe(df3)
+    df3['Месяц'] = df3['Дата'].dt.month
+    df3['Год'] = df3['Дата'].dt.year
+if st.checkbox('Сформировать файл для скачивания'):
+    df4 = st.dataframe(df3)
         # df3.to_excel('Ваш файл.xlsx')
 
-    if st.checkbox('Сформировать ссылку для скачивания'):
+if st.checkbox('Сформировать ссылку для скачивания'):
 
-        st.subheader('СКАЧАТЬ ФАЙЛ')
-        generate_excel_download_link(df4)
+    st.subheader('СКАЧАТЬ ФАЙЛ')
+    generate_excel_download_link(df4)
