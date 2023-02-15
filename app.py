@@ -20,12 +20,13 @@ st.subheader('Добавьте ваш файл')
 
 uploaded_files = st.file_uploader("ВЫБИРИТЕ СВОЙ ФАЙЛ")
 if uploaded_files:
+    con = uploaded_files
 
     
 #         con = sqlite3.connect(uploaded_files)
 #         cur = con.cursor()
-        df1 = pd.read_sql("""SELECT url, title, visit_count, 
-            datetime(last_visit_time / 1000000 + (strftime('%s', '1601-01-01')), 'unixepoch', 'localtime') FROM urls""", uploaded_files)
+    df1 = pd.read_sql("""SELECT url, title, visit_count, 
+            datetime(last_visit_time / 1000000 + (strftime('%s', '1601-01-01')), 'unixepoch', 'localtime') FROM urls""", con)
 #         df2 = pd.DataFrame(df1)
 #         df3 = df2.rename(columns={"datetime(last_visit_time / 1000000 + (strftime('%s', '1601-01-01')), 'unixepoch', 'localtime')": "Дата",
 #                                           "url": "Адрес",
