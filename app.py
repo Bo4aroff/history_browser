@@ -21,7 +21,7 @@ st.subheader('Добавьте ваш файл')
 
 
 
-uploaded_files = uploaded_file = st.file_uploader('ВЫБИРИТЕ СВОЙ ФАЙЛ')
+uploaded_files = st.file_uploader('ВЫБИРИТЕ СВОЙ ФАЙЛ')
 if uploaded_files:
     
 
